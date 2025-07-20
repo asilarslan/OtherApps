@@ -352,14 +352,20 @@ public struct AppCardView: View {
     
     private func openAppStore() {
         #if canImport(UIKit)
+        print("🔍 Attempting to open App Store for: \(app.name)")
+        print("🔗 App Store URL: \(app.appStoreUrl)")
+        
         // Extract app identifier from URL
         let appIdentifier = extractAppIdentifier(from: app.appStoreUrl)
+        print("🆔 Extracted App ID: \(appIdentifier ?? "nil")")
         
         if let appId = appIdentifier {
             // Use SKOverlay for in-app presentation
+            print("📱 Using SKOverlay for app ID: \(appId)")
             showAppStoreOverlay(appIdentifier: appId)
         } else {
             // Fallback to external App Store
+            print("🌐 Falling back to external App Store")
             openExternalAppStore()
         }
         #elseif canImport(AppKit)
@@ -376,28 +382,63 @@ public struct AppCardView: View {
             "\\/(\\d+)$"          // /123456789
         ]
         
-        for pattern in patterns {
+        for (index, pattern) in patterns.enumerated() {
             if let regex = try? NSRegularExpression(pattern: pattern),
                let match = regex.firstMatch(in: urlString, range: NSRange(urlString.startIndex..., in: urlString)) {
                 let range = Range(match.range(at: 1), in: urlString)!
-                return String(urlString[range])
+                let extracted = String(urlString[range])
+                print("✅ Pattern \(index) matched: \(extracted)")
+                return extracted
             }
         }
         
+        print("❌ No app ID pattern matched for URL: \(urlString)")
         return nil
     }
     
     private func showAppStoreOverlay(appIdentifier: String) {
         #if canImport(UIKit)
         if #available(iOS 14.0, *) {
+            print("📱 iOS 14+ detected, attempting SKOverlay")
+            
             let config = SKOverlay.AppConfiguration(appIdentifier: appIdentifier, position: .bottom)
             let overlay = SKOverlay(configuration: config)
             
-            // Find the window scene to present the overlay
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                overlay.present(in: windowScene)
+            // Try multiple ways to find the window scene
+            var windowScene: UIWindowScene?
+            
+            // Method 1: From connected scenes
+            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                windowScene = scene
+                print("✅ Found window scene from connected scenes")
+            }
+            
+            // Method 2: From key window
+            if windowScene == nil, let keyWindow = UIApplication.shared.keyWindow {
+                windowScene = keyWindow.windowScene
+                print("✅ Found window scene from key window")
+            }
+            
+            // Method 3: From windows array
+            if windowScene == nil {
+                for window in UIApplication.shared.windows {
+                    if let scene = window.windowScene {
+                        windowScene = scene
+                        print("✅ Found window scene from windows array")
+                        break
+                    }
+                }
+            }
+            
+            if let scene = windowScene {
+                print("✅ Window scene found, presenting SKOverlay for app: \(appIdentifier)")
+                overlay.present(in: scene)
+            } else {
+                print("❌ No window scene found, falling back to external")
+                openExternalAppStore()
             }
         } else {
+            print("📱 iOS < 14.0 detected, using external App Store")
             // Fallback for iOS < 14.0
             openExternalAppStore()
         }
