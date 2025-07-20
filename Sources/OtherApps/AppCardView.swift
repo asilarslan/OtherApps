@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 
 #if canImport(UIKit)
 import UIKit
@@ -342,12 +343,66 @@ public struct AppCardView: View {
     
     private func openAppStore() {
         #if canImport(UIKit)
+        // Extract app identifier from URL
+        let appIdentifier = extractAppIdentifier(from: app.appStoreUrl)
+        
+        if let appId = appIdentifier {
+            // Use SKOverlay for in-app presentation
+            showAppStoreOverlay(appIdentifier: appId)
+        } else {
+            // Fallback to external App Store
+            openExternalAppStore()
+        }
+        #elseif canImport(AppKit)
+        // macOS doesn't support SKOverlay, use external App Store
+        openExternalAppStore()
+        #endif
+    }
+    
+    private func extractAppIdentifier(from urlString: String) -> String? {
+        // Extract app ID from various URL formats
+        let patterns = [
+            "id(\\d+)",           // id123456789
+            "app/([^/]+)",        // app/app-name
+            "\\/(\\d+)$"          // /123456789
+        ]
+        
+        for pattern in patterns {
+            if let regex = try? NSRegularExpression(pattern: pattern),
+               let match = regex.firstMatch(in: urlString, range: NSRange(urlString.startIndex..., in: urlString)) {
+                let range = Range(match.range(at: 1), in: urlString)!
+                return String(urlString[range])
+            }
+        }
+        
+        return nil
+    }
+    
+    private func showAppStoreOverlay(appIdentifier: String) {
+        #if canImport(UIKit)
+        if #available(iOS 14.0, *) {
+            let config = SKOverlay.AppConfiguration(appIdentifier: appIdentifier, position: .bottom)
+            let overlay = SKOverlay(configuration: config)
+            
+            // Find the window scene to present the overlay
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                overlay.present(in: windowScene)
+            }
+        } else {
+            // Fallback for iOS < 14.0
+            openExternalAppStore()
+        }
+        #endif
+    }
+    
+    private func openExternalAppStore() {
+        #if canImport(UIKit)
         guard let url = URL(string: app.appStoreUrl) else { 
             print("Invalid App Store URL: \(app.appStoreUrl)")
             return 
         }
         
-        print("Opening App Store URL: \(url)")
+        print("Opening external App Store URL: \(url)")
         
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(url, options: [:]) { success in
@@ -362,7 +417,12 @@ public struct AppCardView: View {
             }
         }
         #elseif canImport(AppKit)
-        guard let url = URL(string: app.appStoreUrl) else { return }
+        guard let url = URL(string: app.appStoreUrl) else { 
+            print("Invalid App Store URL: \(app.appStoreUrl)")
+            return 
+        }
+        
+        print("Opening external App Store URL: \(url)")
         NSWorkspace.shared.open(url)
         #endif
     }

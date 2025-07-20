@@ -9,13 +9,14 @@ A beautiful, professional SwiftUI library for showcasing your other apps from th
 
 ## ✨ Features
 
-- **Automatic App Data Fetching**: Just provide App Store URLs, we handle the rest
-- **Multiple Layout Options**: Grid, List, Carousel, and Featured layouts
-- **Beautiful Design**: Modern, native iOS design with smooth animations
-- **JSON Configuration**: Load apps from your website's JSON file
-- **Smart Caching**: Efficient image and data caching
-- **Error Handling**: Graceful error states and loading indicators
-- **Easy Integration**: Drop-in SwiftUI component
+- **5 Beautiful Layouts**: Grid, List, Carousel, Featured, and Minimal
+- **Cross-Platform**: iOS, macOS, watchOS, tvOS support
+- **Multiple Data Sources**: JSON URLs, App Store URLs, or configuration objects
+- **Customizable**: Colors, fonts, spacing, and more
+- **In-App App Store**: SKOverlay integration for seamless app discovery (iOS 14+)
+- **Async Loading**: Built with modern Swift concurrency
+- **Error Handling**: Graceful error states and retry functionality
+- **Accessibility**: Full VoiceOver and Dynamic Type support
 
 ## 📱 Screenshots
 
