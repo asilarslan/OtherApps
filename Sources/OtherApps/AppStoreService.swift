@@ -159,7 +159,7 @@ public enum AppStoreServiceError: LocalizedError {
 
 public extension AppStoreService {
     /// Creates a sample configuration for testing
-    static func sampleConfiguration() -> AppsConfiguration {
+    nonisolated static func sampleConfiguration() -> AppsConfiguration {
         return AppsConfiguration(
             apps: [
                 AppConfig(

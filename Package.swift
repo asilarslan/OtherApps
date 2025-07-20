@@ -23,8 +23,7 @@ let package = Package(
     targets: [
         .target(
             name: "OtherApps",
-            dependencies: [],
-            path: "OtherApps"
+            dependencies: []
         ),
         .testTarget(
             name: "OtherAppsTests",

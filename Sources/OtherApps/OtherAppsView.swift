@@ -1,5 +1,13 @@
 import SwiftUI
 
+#if canImport(UIKit)
+import UIKit
+#endif
+
+#if canImport(AppKit)
+import AppKit
+#endif
+
 public struct OtherAppsView: View {
     // MARK: - Properties
     
@@ -90,7 +98,7 @@ public struct OtherAppsView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(UIColor.systemGroupedBackground))
+        .background(systemGroupedBackgroundColor)
     }
     
     private func errorView(_ error: Error) -> some View {
@@ -116,7 +124,7 @@ public struct OtherAppsView: View {
             .buttonStyle(.borderedProminent)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(UIColor.systemGroupedBackground))
+        .background(systemGroupedBackgroundColor)
     }
     
     private var emptyStateView: some View {
@@ -133,7 +141,7 @@ public struct OtherAppsView: View {
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(UIColor.systemGroupedBackground))
+        .background(systemGroupedBackgroundColor)
     }
     
     private var contentView: some View {
@@ -155,7 +163,7 @@ public struct OtherAppsView: View {
                 }
             }
         }
-        .background(Color(UIColor.systemGroupedBackground))
+        .background(systemGroupedBackgroundColor)
     }
     
     private func headerView(_ config: AppsConfiguration) -> some View {
@@ -259,6 +267,16 @@ public struct OtherAppsView: View {
         ]
     }
     
+    // MARK: - Platform-specific Colors
+    
+    private var systemGroupedBackgroundColor: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemGroupedBackground)
+        #else
+        return Color(NSColor.controlBackgroundColor)
+        #endif
+    }
+    
     // MARK: - Actions
     
     private func handleAppTap(_ app: AppStoreApp) {
@@ -318,34 +336,5 @@ public extension OtherAppsView {
             jsonUrl: url,
             layout: layout
         )
-    }
-}
-
-// MARK: - Preview
-
-struct OtherAppsView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            // List layout
-            OtherAppsView(
-                configuration: AppStoreService.sampleConfiguration(),
-                layout: .list
-            )
-            .previewDisplayName("List Layout")
-            
-            // Grid layout
-            OtherAppsView(
-                configuration: AppStoreService.sampleConfiguration(),
-                layout: .grid
-            )
-            .previewDisplayName("Grid Layout")
-            
-            // Featured layout
-            OtherAppsView(
-                configuration: AppStoreService.sampleConfiguration(),
-                layout: .featured
-            )
-            .previewDisplayName("Featured Layout")
-        }
     }
 } 

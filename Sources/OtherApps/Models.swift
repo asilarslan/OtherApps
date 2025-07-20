@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUI
 
 // MARK: - App Store App Model
 public struct AppStoreApp: Identifiable, Codable, Hashable {
@@ -16,6 +15,37 @@ public struct AppStoreApp: Identifiable, Codable, Hashable {
     public let version: String
     public let releaseDate: Date
     public let bundleId: String
+    
+    // MARK: - Public Initializer
+    public init(
+        id: String,
+        name: String,
+        description: String,
+        iconUrl: String,
+        appStoreUrl: String,
+        price: Double,
+        formattedPrice: String,
+        category: String,
+        averageRating: Double,
+        ratingCount: Int,
+        version: String,
+        releaseDate: Date,
+        bundleId: String
+    ) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.iconUrl = iconUrl
+        self.appStoreUrl = appStoreUrl
+        self.price = price
+        self.formattedPrice = formattedPrice
+        self.category = category
+        self.averageRating = averageRating
+        self.ratingCount = ratingCount
+        self.version = version
+        self.releaseDate = releaseDate
+        self.bundleId = bundleId
+    }
     
     enum CodingKeys: String, CodingKey {
         case id = "trackId"

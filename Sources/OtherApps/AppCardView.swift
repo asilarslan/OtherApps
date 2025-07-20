@@ -1,5 +1,13 @@
 import SwiftUI
 
+#if canImport(UIKit)
+import UIKit
+#endif
+
+#if canImport(AppKit)
+import AppKit
+#endif
+
 public struct AppCardView: View {
     let app: AppStoreApp
     let style: AppCardStyle
@@ -84,7 +92,7 @@ public struct AppCardView: View {
             }
         }
         .padding(16)
-        .background(Color(UIColor.systemBackground))
+        .background(systemBackgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 2)
     }
@@ -110,7 +118,7 @@ public struct AppCardView: View {
             StarRatingView(rating: app.averageRating, size: 10)
         }
         .padding(12)
-        .background(Color(UIColor.secondarySystemBackground))
+        .background(secondarySystemBackgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
     
@@ -184,7 +192,7 @@ public struct AppCardView: View {
             }
             .padding(16)
         }
-        .background(Color(UIColor.systemBackground))
+        .background(systemBackgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 4)
     }
@@ -204,12 +212,55 @@ public struct AppCardView: View {
         .padding(8)
     }
     
+    // MARK: - Platform-specific Colors
+    
+    private var systemBackgroundColor: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemBackground)
+        #else
+        return Color(NSColor.controlBackgroundColor)
+        #endif
+    }
+    
+    private var secondarySystemBackgroundColor: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.secondarySystemBackground)
+        #else
+        return Color(NSColor.controlColor)
+        #endif
+    }
+    
+    private var systemGray5Color: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemGray5)
+        #else
+        return Color(NSColor.controlColor)
+        #endif
+    }
+    
+    private var systemGray3Color: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemGray3)
+        #else
+        return Color(NSColor.tertiaryLabelColor)
+        #endif
+    }
+    
     // MARK: - Actions
     
     private func openAppStore() {
-        if let url = URL(string: app.appStoreUrl) {
-            UIApplication.shared.open(url)
+        #if canImport(UIKit)
+        guard let url = URL(string: app.appStoreUrl) else { return }
+        
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(url)
         }
+        #elseif canImport(AppKit)
+        guard let url = URL(string: app.appStoreUrl) else { return }
+        NSWorkspace.shared.open(url)
+        #endif
     }
 }
 
@@ -235,15 +286,31 @@ struct AppIconView: View {
                 .aspectRatio(contentMode: .fit)
         } placeholder: {
             RoundedRectangle(cornerRadius: size * 0.2)
-                .fill(Color(UIColor.systemGray5))
+                .fill(placeholderBackgroundColor)
                 .overlay(
                     Image(systemName: "app")
-                        .foregroundColor(Color(UIColor.systemGray3))
+                        .foregroundColor(placeholderForegroundColor)
                         .font(.system(size: size * 0.4))
                 )
         }
         .frame(width: size, height: size)
         .clipShape(RoundedRectangle(cornerRadius: size * 0.2))
+    }
+    
+    private var placeholderBackgroundColor: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemGray5)
+        #else
+        return Color(NSColor.controlColor)
+        #endif
+    }
+    
+    private var placeholderForegroundColor: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemGray3)
+        #else
+        return Color(NSColor.tertiaryLabelColor)
+        #endif
     }
 }
 
@@ -287,35 +354,5 @@ struct AppCardButtonStyle: ButtonStyle {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
             .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
-    }
-}
-
-// MARK: - Previews
-
-struct AppCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleApp = AppStoreApp(
-            id: "123456",
-            name: "Cartoonify Me",
-            description: "Transform your photos into amazing cartoons with AI technology. Easy to use, professional results.",
-            iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/example.jpg/512x512bb.jpg",
-            appStoreUrl: "https://apps.apple.com/us/app/cartoonify-me/id6747951776",
-            price: 0.0,
-            formattedPrice: "Free",
-            category: "Photo & Video",
-            averageRating: 4.5,
-            ratingCount: 1250,
-            version: "1.0",
-            releaseDate: Date(),
-            bundleId: "com.example.cartoonify"
-        )
-        
-        VStack(spacing: 16) {
-            AppCardView(app: sampleApp, style: .featured)
-            AppCardView(app: sampleApp, style: .standard)
-            AppCardView(app: sampleApp, style: .compact)
-        }
-        .padding()
-        .background(Color(UIColor.systemGroupedBackground))
     }
 } 
