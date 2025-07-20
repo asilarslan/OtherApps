@@ -19,35 +19,29 @@ A beautiful, professional SwiftUI library for showcasing your other apps from th
 
 ## 📱 Screenshots
 
-### Demo App Overview
-![Demo App Overview](Screenshots/Screenshot-01.png)
+<div align="center">
 
-### Grid Layout - App Store Style
-![Grid Layout](Screenshots/Screenshot-02.png)
+| Demo App Overview | Grid Layout - App Store Style |
+|:---:|:---:|
+| ![Demo App Overview](Screenshots/Screenshot-01.png) | ![Grid Layout](Screenshots/Screenshot-02.png) |
 
-### List Layout - Detailed Cards
-![List Layout](Screenshots/Screenshot-03.png)
+| List Layout - Detailed Cards | Carousel Layout - Horizontal Scroll |
+|:---:|:---:|
+| ![List Layout](Screenshots/Screenshot-03.png) | ![Carousel Layout](Screenshots/Screenshot-04.png) |
 
-### Carousel Layout - Horizontal Scroll
-![Carousel Layout](Screenshots/Screenshot-04.png)
+| Featured Layout - Highlight First App | Compact Cards - Perfect for Grid |
+|:---:|:---:|
+| ![Featured Layout](Screenshots/Screenshot-05.png) | ![Compact Cards](Screenshots/Screenshot-06.png) |
 
-### Featured Layout - Highlight First App
-![Featured Layout](Screenshots/Screenshot-05.png)
+| Standard Cards - Rich Information | Loading States - Smooth UX |
+|:---:|:---:|
+| ![Standard Cards](Screenshots/Screenshot-07.png) | ![Loading States](Screenshots/Screenshot-08.png) |
 
-### Compact Cards - Perfect for Grid
-![Compact Cards](Screenshots/Screenshot-06.png)
+| Error Handling - Graceful Fallbacks | JSON Configuration - Dynamic Content |
+|:---:|:---:|
+| ![Error Handling](Screenshots/Screenshot-09.png) | ![JSON Configuration](Screenshots/Screenshot-10.png) |
 
-### Standard Cards - Rich Information
-![Standard Cards](Screenshots/Screenshot-07.png)
-
-### Loading States - Smooth UX
-![Loading States](Screenshots/Screenshot-08.png)
-
-### Error Handling - Graceful Fallbacks
-![Error Handling](Screenshots/Screenshot-09.png)
-
-### JSON Configuration - Dynamic Content
-![JSON Configuration](Screenshots/Screenshot-10.png)
+</div>
 
 ### Layout Comparison
 - **Grid Layout**: Perfect for showcasing multiple apps in App Store style
