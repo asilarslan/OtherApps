@@ -245,11 +245,11 @@ public struct AppCardView: View {
                     .lineLimit(1)
                 
                 HStack(spacing: 4) {
-                    Image(systemName: "link")
+                    Text("link")
                         .font(.caption)
                         .foregroundColor(.blue)
                     
-                    Text("@\(app.appStoreUrl)")
+                    Text(cleanAppStoreUrl)
                         .font(.caption)
                         .foregroundColor(.blue)
                         .lineLimit(1)
@@ -262,6 +262,20 @@ public struct AppCardView: View {
         .frame(maxWidth: .infinity)
         .background(Color.clear)
         .contentShape(Rectangle()) // Make entire area tappable
+    }
+    
+    private var cleanAppStoreUrl: String {
+        // Remove country codes like /us/, /uk/, etc. from URL
+        let url = app.appStoreUrl
+        let pattern = "https://apps\\.apple\\.com/[a-z]{2}/app/"
+        let replacement = "https://apps.apple.com/app/"
+        
+        if let regex = try? NSRegularExpression(pattern: pattern) {
+            let range = NSRange(url.startIndex..., in: url)
+            return regex.stringByReplacingMatches(in: url, range: range, withTemplate: replacement)
+        }
+        
+        return url
     }
     
     private var listCard: some View {
