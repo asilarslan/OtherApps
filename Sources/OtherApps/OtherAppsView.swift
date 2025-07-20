@@ -303,7 +303,116 @@ public struct OtherAppsView: View {
     // MARK: - Actions
     
     private func handleAppTap(_ app: AppStoreApp) {
-        onAppTap?(app)
+        if let onAppTap = onAppTap {
+            // Custom callback provided, use it
+            onAppTap(app)
+        } else {
+            // No custom callback, open App Store directly
+            openAppStore(for: app)
+        }
+    }
+    
+    private func openAppStore(for app: AppStoreApp) {
+        #if canImport(UIKit)
+        print("🔍 Attempting to open App Store for: \(app.name)")
+        print("🔗 App Store URL: \(app.appStoreUrl)")
+        
+        // Extract app identifier from URL
+        let appIdentifier = extractAppIdentifier(from: app.appStoreUrl)
+        print("🆔 Extracted App ID: \(appIdentifier ?? "nil")")
+        
+        if let appId = appIdentifier {
+            // Use itms-apps:// URL scheme for reliable App Store opening
+            print("📱 Using itms-apps:// for app ID: \(appId)")
+            openAppStoreWithScheme(appId: appId)
+        } else {
+            // Fallback to external App Store
+            print("🌐 Falling back to external App Store")
+            openExternalAppStore(for: app)
+        }
+        #elseif canImport(AppKit)
+        // macOS doesn't support itms-apps://, use external App Store
+        openExternalAppStore(for: app)
+        #endif
+    }
+    
+    private func extractAppIdentifier(from urlString: String) -> String? {
+        print("🔍 Parsing URL: \(urlString)")
+        
+        // Simple pattern: look for /id followed by numbers
+        if let range = urlString.range(of: "/id") {
+            let afterId = String(urlString[range.upperBound...])
+            print("🔍 After /id: \(afterId)")
+            
+            // Extract numbers after /id
+            let numbers = afterId.prefix(while: { $0.isNumber })
+            if !numbers.isEmpty {
+                let appId = String(numbers)
+                print("✅ Extracted App ID: \(appId)")
+                return appId
+            }
+        }
+        
+        print("❌ No app ID pattern matched for URL: \(urlString)")
+        return nil
+    }
+    
+    private func openAppStoreWithScheme(appId: String) {
+        #if canImport(UIKit)
+        let appStoreUrl = "itms-apps://itunes.apple.com/app/id\(appId)"
+        print("🔗 Opening: \(appStoreUrl)")
+        
+        if let url = URL(string: appStoreUrl) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:]) { success in
+                    if success {
+                        print("✅ Successfully opened App Store for app ID: \(appId)")
+                    } else {
+                        print("❌ Failed to open App Store, trying external URL")
+                    }
+                }
+            } else {
+                let success = UIApplication.shared.openURL(url)
+                if !success {
+                    print("❌ Failed to open App Store")
+                }
+            }
+        } else {
+            print("❌ Invalid itms-apps:// URL")
+        }
+        #endif
+    }
+    
+    private func openExternalAppStore(for app: AppStoreApp) {
+        #if canImport(UIKit)
+        guard let url = URL(string: app.appStoreUrl) else { 
+            print("Invalid App Store URL: \(app.appStoreUrl)")
+            return 
+        }
+        
+        print("Opening external App Store URL: \(url)")
+        
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [:]) { success in
+                if !success {
+                    print("Failed to open App Store URL: \(url)")
+                }
+            }
+        } else {
+            let success = UIApplication.shared.openURL(url)
+            if !success {
+                print("Failed to open App Store URL: \(url)")
+            }
+        }
+        #elseif canImport(AppKit)
+        guard let url = URL(string: app.appStoreUrl) else { 
+            print("Invalid App Store URL: \(app.appStoreUrl)")
+            return 
+        }
+        
+        print("Opening external App Store URL: \(url)")
+        NSWorkspace.shared.open(url)
+        #endif
     }
     
     private func loadApps() async {
