@@ -245,7 +245,7 @@ public struct AppCardView: View {
                     .lineLimit(1)
                 
                 HStack(spacing: 4) {
-                    Text("link")
+                    Image(systemName: "link")
                         .font(.caption)
                         .foregroundColor(.blue)
                     
@@ -265,17 +265,27 @@ public struct AppCardView: View {
     }
     
     private var cleanAppStoreUrl: String {
-        // Remove country codes like /us/, /uk/, etc. from URL
-        let url = app.appStoreUrl
-        let pattern = "https://apps\\.apple\\.com/[a-z]{2}/app/"
-        let replacement = "https://apps.apple.com/app/"
+        // Extract app ID and create clean URL format
+        let appId = extractAppId(from: app.appStoreUrl)
+        return "https://apps.apple.com/app/id\(appId)"
+    }
+    
+    private func extractAppId(from urlString: String) -> String {
+        // Extract app ID from various URL formats
+        let patterns = [
+            "id(\\d+)",           // id123456789
+            "\\/(\\d+)$"          // /123456789
+        ]
         
-        if let regex = try? NSRegularExpression(pattern: pattern) {
-            let range = NSRange(url.startIndex..., in: url)
-            return regex.stringByReplacingMatches(in: url, range: range, withTemplate: replacement)
+        for pattern in patterns {
+            if let regex = try? NSRegularExpression(pattern: pattern),
+               let match = regex.firstMatch(in: urlString, range: NSRange(urlString.startIndex..., in: urlString)) {
+                let range = Range(match.range(at: 1), in: urlString)!
+                return String(urlString[range])
+            }
         }
         
-        return url
+        return "123456789" // Fallback
     }
     
     private var listCard: some View {
