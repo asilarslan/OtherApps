@@ -53,7 +53,24 @@ public struct OtherApps {
     
     /// Create a sample configuration for testing
     public static func sampleConfiguration() -> AppsConfiguration {
-        AppStoreService.sampleConfiguration()
+        return AppsConfiguration(
+            apps: [
+                AppConfig(
+                    appStoreUrl: "https://apps.apple.com/us/app/cartoonify-me/id6747951776",
+                    customTitle: nil,
+                    customDescription: nil,
+                    featured: true
+                ),
+                AppConfig(
+                    appStoreUrl: "https://apps.apple.com/us/app/instagram/id389801252",
+                    customTitle: nil,
+                    customDescription: nil,
+                    featured: false
+                )
+            ],
+            title: "My Other Apps",
+            subtitle: "Check out my other creations!"
+        )
     }
 }
 

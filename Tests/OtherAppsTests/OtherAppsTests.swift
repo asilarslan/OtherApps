@@ -53,12 +53,14 @@ final class OtherAppsTests: XCTestCase {
         XCTAssertEqual(configuration.subtitle, "Check them out!")
     }
     
-    func testAppStoreServiceSampleConfiguration() {
-        let sampleConfig = AppStoreService.sampleConfiguration()
+    func testOtherAppsSampleConfiguration() {
+        let sampleConfig = OtherApps.sampleConfiguration()
         
         XCTAssertEqual(sampleConfig.apps.count, 2)
         XCTAssertEqual(sampleConfig.title, "My Other Apps")
         XCTAssertNotNil(sampleConfig.subtitle)
+        XCTAssertEqual(sampleConfig.apps[0].appStoreUrl, "https://apps.apple.com/us/app/cartoonify-me/id6747951776")
+        XCTAssertTrue(sampleConfig.apps[0].featured)
     }
     
     func testAppStoreServiceErrorDescriptions() {
