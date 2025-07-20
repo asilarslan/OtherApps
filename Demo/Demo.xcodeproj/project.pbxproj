@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B84DABB22E2CC496006DBB24 /* OtherApps in Frameworks */ = {isa = PBXBuildFile; productRef = B84DABB12E2CC496006DBB24 /* OtherApps */; };
+		B84DABC02E2D2781006DBB24 /* OtherApps in Frameworks */ = {isa = PBXBuildFile; productRef = B84DABBF2E2D2781006DBB24 /* OtherApps */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B84DABB22E2CC496006DBB24 /* OtherApps in Frameworks */,
+				B84DABC02E2D2781006DBB24 /* OtherApps in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,7 @@
 			);
 			name = Demo;
 			packageProductDependencies = (
-				B84DABB12E2CC496006DBB24 /* OtherApps */,
+				B84DABBF2E2D2781006DBB24 /* OtherApps */,
 			);
 			productName = Demo;
 			productReference = B84DAB942E2CB97B006DBB24 /* Demo.app */;
@@ -101,7 +101,7 @@
 			mainGroup = B84DAB8B2E2CB97B006DBB24;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				B84DABB02E2CC496006DBB24 /* XCRemoteSwiftPackageReference "OtherApps" */,
+				B84DABBE2E2D2781006DBB24 /* XCRemoteSwiftPackageReference "OtherApps" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B84DAB952E2CB97B006DBB24 /* Products */;
@@ -335,7 +335,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B84DABB02E2CC496006DBB24 /* XCRemoteSwiftPackageReference "OtherApps" */ = {
+		B84DABBE2E2D2781006DBB24 /* XCRemoteSwiftPackageReference "OtherApps" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/asilarslan/OtherApps";
 			requirement = {
@@ -346,9 +346,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B84DABB12E2CC496006DBB24 /* OtherApps */ = {
+		B84DABBF2E2D2781006DBB24 /* OtherApps */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B84DABB02E2CC496006DBB24 /* XCRemoteSwiftPackageReference "OtherApps" */;
+			package = B84DABBE2E2D2781006DBB24 /* XCRemoteSwiftPackageReference "OtherApps" */;
 			productName = OtherApps;
 		};
 /* End XCSwiftPackageProductDependency section */

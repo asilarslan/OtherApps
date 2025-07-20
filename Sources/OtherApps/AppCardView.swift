@@ -22,6 +22,7 @@ public struct AppCardView: View {
     
     public var body: some View {
         Button(action: {
+            print("🔘 Button tapped for app: \(app.name)")
             onTap?() ?? openAppStore()
         }) {
             switch style {
@@ -98,6 +99,7 @@ public struct AppCardView: View {
         .background(systemBackgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 2)
+        .contentShape(Rectangle()) // Make entire card tappable
     }
     
     private var compactCard: some View {
@@ -152,6 +154,7 @@ public struct AppCardView: View {
         .background(secondarySystemBackgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+        .contentShape(Rectangle()) // Make entire card tappable
     }
     
     private var featuredCard: some View {
@@ -227,6 +230,7 @@ public struct AppCardView: View {
         .background(systemBackgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 4)
+        .contentShape(Rectangle()) // Make entire card tappable
     }
     
     private var minimalCard: some View {
@@ -251,6 +255,7 @@ public struct AppCardView: View {
         .padding(12)
         .frame(maxWidth: .infinity)
         .background(Color.clear)
+        .contentShape(Rectangle()) // Make entire area tappable
     }
     
     private var shortAppStoreUrl: String {
@@ -312,6 +317,7 @@ public struct AppCardView: View {
         .background(secondarySystemBackgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+        .contentShape(Rectangle()) // Make entire card tappable
     }
     
     // MARK: - Platform-specific Colors
