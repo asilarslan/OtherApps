@@ -360,6 +360,9 @@ public struct AppCardView: View {
         print("🔍 Attempting to open App Store for: \(app.name)")
         print("🔗 App Store URL: \(app.appStoreUrl)")
         
+        // Test with a known working URL first
+        testAppStoreOpening()
+        
         // Extract app identifier from URL
         let appIdentifier = extractAppIdentifier(from: app.appStoreUrl)
         print("🆔 Extracted App ID: \(appIdentifier ?? "nil")")
@@ -376,6 +379,22 @@ public struct AppCardView: View {
         #elseif canImport(AppKit)
         // macOS doesn't support itms-apps://, use external App Store
         openExternalAppStore()
+        #endif
+    }
+    
+    private func testAppStoreOpening() {
+        #if canImport(UIKit)
+        print("🧪 Testing App Store opening...")
+        
+        // Test with a known working app (Instagram)
+        let testUrl = "itms-apps://itunes.apple.com/app/id389801252"
+        
+        if let url = URL(string: testUrl) {
+            print("🧪 Testing URL: \(testUrl)")
+            UIApplication.shared.open(url, options: [:]) { success in
+                print("🧪 Test result: \(success ? "SUCCESS" : "FAILED")")
+            }
+        }
         #endif
     }
     
@@ -409,7 +428,23 @@ public struct AppCardView: View {
     }
     
     private func extractAppIdentifier(from urlString: String) -> String? {
-        // Extract app ID from various URL formats
+        print("🔍 Parsing URL: \(urlString)")
+        
+        // Simple pattern: look for /id followed by numbers
+        if let range = urlString.range(of: "/id") {
+            let afterId = String(urlString[range.upperBound...])
+            print("🔍 After /id: \(afterId)")
+            
+            // Extract numbers after /id
+            let numbers = afterId.prefix(while: { $0.isNumber })
+            if !numbers.isEmpty {
+                let appId = String(numbers)
+                print("✅ Extracted App ID: \(appId)")
+                return appId
+            }
+        }
+        
+        // Try other patterns
         let patterns = [
             "id(\\d+)",           // id123456789
             "app/([^/]+)",        // app/app-name
