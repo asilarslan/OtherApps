@@ -1,5 +1,4 @@
 import SwiftUI
-import StoreKit
 
 #if canImport(UIKit)
 import UIKit
@@ -366,17 +365,46 @@ public struct AppCardView: View {
         print("🆔 Extracted App ID: \(appIdentifier ?? "nil")")
         
         if let appId = appIdentifier {
-            // Use SKOverlay for in-app presentation
-            print("📱 Using SKOverlay for app ID: \(appId)")
-            showAppStoreOverlay(appIdentifier: appId)
+            // Use itms-apps:// URL scheme for reliable App Store opening
+            print("📱 Using itms-apps:// for app ID: \(appId)")
+            openAppStoreWithScheme(appId: appId)
         } else {
             // Fallback to external App Store
             print("🌐 Falling back to external App Store")
             openExternalAppStore()
         }
         #elseif canImport(AppKit)
-        // macOS doesn't support SKOverlay, use external App Store
+        // macOS doesn't support itms-apps://, use external App Store
         openExternalAppStore()
+        #endif
+    }
+    
+    private func openAppStoreWithScheme(appId: String) {
+        #if canImport(UIKit)
+        let appStoreUrl = "itms-apps://itunes.apple.com/app/id\(appId)"
+        print("🔗 Opening: \(appStoreUrl)")
+        
+        if let url = URL(string: appStoreUrl) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:]) { success in
+                    if success {
+                        print("✅ Successfully opened App Store for app ID: \(appId)")
+                    } else {
+                        print("❌ Failed to open App Store, trying external URL")
+                        self.openExternalAppStore()
+                    }
+                }
+            } else {
+                let success = UIApplication.shared.openURL(url)
+                if !success {
+                    print("❌ Failed to open App Store, trying external URL")
+                    openExternalAppStore()
+                }
+            }
+        } else {
+            print("❌ Invalid itms-apps:// URL, trying external URL")
+            openExternalAppStore()
+        }
         #endif
     }
     
@@ -400,55 +428,6 @@ public struct AppCardView: View {
         
         print("❌ No app ID pattern matched for URL: \(urlString)")
         return nil
-    }
-    
-    private func showAppStoreOverlay(appIdentifier: String) {
-        #if canImport(UIKit)
-        if #available(iOS 14.0, *) {
-            print("📱 iOS 14+ detected, attempting SKOverlay")
-            
-            let config = SKOverlay.AppConfiguration(appIdentifier: appIdentifier, position: .bottom)
-            let overlay = SKOverlay(configuration: config)
-            
-            // Try multiple ways to find the window scene
-            var windowScene: UIWindowScene?
-            
-            // Method 1: From connected scenes
-            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                windowScene = scene
-                print("✅ Found window scene from connected scenes")
-            }
-            
-            // Method 2: From key window
-            if windowScene == nil, let keyWindow = UIApplication.shared.keyWindow {
-                windowScene = keyWindow.windowScene
-                print("✅ Found window scene from key window")
-            }
-            
-            // Method 3: From windows array
-            if windowScene == nil {
-                for window in UIApplication.shared.windows {
-                    if let scene = window.windowScene {
-                        windowScene = scene
-                        print("✅ Found window scene from windows array")
-                        break
-                    }
-                }
-            }
-            
-            if let scene = windowScene {
-                print("✅ Window scene found, presenting SKOverlay for app: \(appIdentifier)")
-                overlay.present(in: scene)
-            } else {
-                print("❌ No window scene found, falling back to external")
-                openExternalAppStore()
-            }
-        } else {
-            print("📱 iOS < 14.0 detected, using external App Store")
-            // Fallback for iOS < 14.0
-            openExternalAppStore()
-        }
-        #endif
     }
     
     private func openExternalAppStore() {
