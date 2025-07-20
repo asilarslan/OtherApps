@@ -43,6 +43,10 @@ A beautiful, professional SwiftUI library for showcasing your other apps from th
 |:---:|:---:|
 | ![Carousel Layout Light Mode](Screenshots/Screenshot-09.png) | ![Carousel Layout Dark Mode](Screenshots/Screenshot-10.png) |
 
+| Minimal Layout - Light Mode | Minimal Layout - Dark Mode |
+|:---:|:---:|
+| ![Minimal Layout Light Mode](Screenshots/Screenshot-11.png) | ![Minimal Layout Dark Mode](Screenshots/Screenshot-12.png) |
+
 </div>
 
 ### Layout Comparison
@@ -51,6 +55,7 @@ A beautiful, professional SwiftUI library for showcasing your other apps from th
 - **List Layout**: Detailed view with full descriptions and ratings
 - **Featured Layout**: Highlight one app with others below in compact grid
 - **Carousel**: Horizontal scrolling showcase for featured apps
+- **Minimal Layout**: Clean, simple design with app icons and links
 
 ### Dark Mode Support
 All layouts automatically adapt to system appearance settings, providing a seamless experience in both light and dark modes.
@@ -108,6 +113,9 @@ OtherApps.view(urls: yourUrls, layout: .list)
 
 // Carousel (horizontal scrolling)
 OtherApps.view(urls: yourUrls, layout: .carousel)
+
+// Minimal layout (clean, simple design)
+OtherApps.view(urls: yourUrls, layout: .minimal)
 ```
 
 ## 📝 JSON Configuration Format
@@ -143,6 +151,7 @@ public enum OtherAppsLayout {
     case grid       // 2-column grid with compact cards
     case carousel   // Horizontal scrolling carousel
     case featured   // Featured first app + grid of others
+    case minimal    // Clean, simple design with app icons and links
 }
 ```
 
