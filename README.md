@@ -21,33 +21,37 @@ A beautiful, professional SwiftUI library for showcasing your other apps from th
 
 <div align="center">
 
-| Demo App Overview | Grid Layout - App Store Style |
+| Simple Usage - Light Mode | Simple Usage - Dark Mode |
 |:---:|:---:|
-| ![Demo App Overview](Screenshots/Screenshot-01.png) | ![Grid Layout](Screenshots/Screenshot-02.png) |
+| ![Simple Usage Light Mode](Screenshots/Screenshot-01.png) | ![Simple Usage Dark Mode](Screenshots/Screenshot-02.png) |
 
-| List Layout - Detailed Cards | Carousel Layout - Horizontal Scroll |
+| Grid Layout - Light Mode | Grid Layout - Dark Mode |
 |:---:|:---:|
-| ![List Layout](Screenshots/Screenshot-03.png) | ![Carousel Layout](Screenshots/Screenshot-04.png) |
+| ![Grid Layout Light Mode](Screenshots/Screenshot-03.png) | ![Grid Layout Dark Mode](Screenshots/Screenshot-04.png) |
 
-| Featured Layout - Highlight First App | Compact Cards - Perfect for Grid |
+| List Layout - Light Mode | List Layout - Dark Mode |
 |:---:|:---:|
-| ![Featured Layout](Screenshots/Screenshot-05.png) | ![Compact Cards](Screenshots/Screenshot-06.png) |
+| ![List Layout Light Mode](Screenshots/Screenshot-05.png) | ![List Layout Dark Mode](Screenshots/Screenshot-06.png) |
 
-| Standard Cards - Rich Information | Loading States - Smooth UX |
+| Featured Layout - Light Mode | Featured Layout - Dark Mode |
 |:---:|:---:|
-| ![Standard Cards](Screenshots/Screenshot-07.png) | ![Loading States](Screenshots/Screenshot-08.png) |
+| ![Featured Layout Light Mode](Screenshots/Screenshot-07.png) | ![Featured Layout Dark Mode](Screenshots/Screenshot-08.png) |
 
-| Error Handling - Graceful Fallbacks | JSON Configuration - Dynamic Content |
+| Carousel Layout - Light Mode | Carousel Layout - Dark Mode |
 |:---:|:---:|
-| ![Error Handling](Screenshots/Screenshot-09.png) | ![JSON Configuration](Screenshots/Screenshot-10.png) |
+| ![Carousel Layout Light Mode](Screenshots/Screenshot-09.png) | ![Carousel Layout Dark Mode](Screenshots/Screenshot-10.png) |
 
 </div>
 
 ### Layout Comparison
+- **Simple Usage**: Basic implementation with default settings
 - **Grid Layout**: Perfect for showcasing multiple apps in App Store style
-- **Featured Layout**: Highlight one app with others below in compact grid
 - **List Layout**: Detailed view with full descriptions and ratings
+- **Featured Layout**: Highlight one app with others below in compact grid
 - **Carousel**: Horizontal scrolling showcase for featured apps
+
+### Dark Mode Support
+All layouts automatically adapt to system appearance settings, providing a seamless experience in both light and dark modes.
 
 ## 🚀 Quick Start
 
