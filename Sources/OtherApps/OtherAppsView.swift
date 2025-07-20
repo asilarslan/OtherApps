@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 
 #if canImport(UIKit)
 import UIKit

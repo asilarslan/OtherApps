@@ -244,10 +244,16 @@ public struct AppCardView: View {
                     .foregroundColor(.primary)
                     .lineLimit(1)
                 
-                Text(shortAppStoreUrl)
-                    .font(.caption)
-                    .foregroundColor(.blue)
-                    .lineLimit(1)
+                HStack(spacing: 4) {
+                    Image(systemName: "link")
+                        .font(.caption)
+                        .foregroundColor(.blue)
+                    
+                    Text("@\(app.appStoreUrl)")
+                        .font(.caption)
+                        .foregroundColor(.blue)
+                        .lineLimit(1)
+                }
             }
             
             Spacer()
@@ -256,15 +262,6 @@ public struct AppCardView: View {
         .frame(maxWidth: .infinity)
         .background(Color.clear)
         .contentShape(Rectangle()) // Make entire area tappable
-    }
-    
-    private var shortAppStoreUrl: String {
-        // Extract short URL from full App Store URL
-        if let url = URL(string: app.appStoreUrl),
-           let host = url.host {
-            return "\(host)\(url.path)"
-        }
-        return app.appStoreUrl
     }
     
     private var listCard: some View {
