@@ -189,7 +189,7 @@ public struct OtherAppsView: View {
     // MARK: - Layout Styles
     
     private var listLayout: some View {
-        LazyVStack(spacing: 1) {
+        LazyVStack(spacing: 12) {
             ForEach(apps) { app in
                 AppCardView(
                     app: app,
@@ -197,12 +197,6 @@ public struct OtherAppsView: View {
                     onTap: { handleAppTap(app) }
                 )
                 .padding(.horizontal, 16)
-                
-                // Add separator line between items
-                if app.id != apps.last?.id {
-                    Divider()
-                        .padding(.horizontal, 16)
-                }
             }
         }
         .padding(.bottom, 16)

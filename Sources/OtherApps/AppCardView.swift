@@ -240,7 +240,7 @@ public struct AppCardView: View {
                     .foregroundColor(.primary)
                     .lineLimit(1)
                 
-                Text(app.appStoreUrl)
+                Text(shortAppStoreUrl)
                     .font(.caption)
                     .foregroundColor(.blue)
                     .lineLimit(1)
@@ -251,6 +251,15 @@ public struct AppCardView: View {
         .padding(12)
         .frame(maxWidth: .infinity)
         .background(Color.clear)
+    }
+    
+    private var shortAppStoreUrl: String {
+        // Extract short URL from full App Store URL
+        if let url = URL(string: app.appStoreUrl),
+           let host = url.host {
+            return "\(host)\(url.path)"
+        }
+        return app.appStoreUrl
     }
     
     private var listCard: some View {
