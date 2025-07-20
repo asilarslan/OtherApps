@@ -239,9 +239,9 @@ public struct AppCardView: View {
                     .foregroundColor(.primary)
                     .lineLimit(1)
                 
-                Text(app.category)
+                Text(app.appStoreUrl)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.blue)
                     .lineLimit(1)
             }
             
@@ -342,12 +342,24 @@ public struct AppCardView: View {
     
     private func openAppStore() {
         #if canImport(UIKit)
-        guard let url = URL(string: app.appStoreUrl) else { return }
+        guard let url = URL(string: app.appStoreUrl) else { 
+            print("Invalid App Store URL: \(app.appStoreUrl)")
+            return 
+        }
+        
+        print("Opening App Store URL: \(url)")
         
         if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: [:]) { success in
+                if !success {
+                    print("Failed to open App Store URL: \(url)")
+                }
+            }
         } else {
-            UIApplication.shared.openURL(url)
+            let success = UIApplication.shared.openURL(url)
+            if !success {
+                print("Failed to open App Store URL: \(url)")
+            }
         }
         #elseif canImport(AppKit)
         guard let url = URL(string: app.appStoreUrl) else { return }
