@@ -1,0 +1,15 @@
+{
+  "originHash" : "5f4cef836d1c616f15d1e7a1cab37851d91375297e66bf951174ef65e4ee4a1b",
+  "pins" : [
+    {
+      "identity" : "otherapps",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/asilarslan/OtherApps",
+      "state" : {
+        "branch" : "main",
+        "revision" : "de03bf05a4804f2227cd4625fabdc7056ee9d2a4"
+      }
+    }
+  ],
+  "version" : 3
+}
