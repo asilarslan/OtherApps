@@ -32,6 +32,8 @@ public struct AppCardView: View {
                 featuredCard
             case .minimal:
                 minimalCard
+            case .list:
+                listCard
             }
         }
         .buttonStyle(AppCardButtonStyle())
@@ -250,6 +252,58 @@ public struct AppCardView: View {
         .background(Color.clear)
     }
     
+    private var listCard: some View {
+        HStack(spacing: 12) {
+            AppIconView(url: app.iconUrl, size: 40)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(app.name)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.primary)
+                    .lineLimit(1)
+                
+                Text(app.category)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+                
+                HStack(spacing: 4) {
+                    StarRatingView(rating: app.averageRating, size: 10)
+                    
+                    if app.price > 0 {
+                        Text(app.formattedPrice)
+                            .font(.caption2)
+                            .fontWeight(.medium)
+                            .foregroundColor(.primary)
+                    }
+                }
+            }
+            
+            Spacer()
+            
+            Button(action: {
+                // Action handled by parent button
+            }) {
+                Text("GET")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 4)
+                    .background(Color.blue)
+                    .clipShape(Capsule())
+            }
+            .disabled(true) // Parent button handles the action
+        }
+        .padding(12)
+        .frame(maxWidth: .infinity)
+        .frame(height: 60) // Fixed height for consistent list
+        .background(secondarySystemBackgroundColor)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+    }
+    
     // MARK: - Platform-specific Colors
     
     private var systemBackgroundColor: Color {
@@ -309,6 +363,7 @@ public enum AppCardStyle {
     case compact
     case featured
     case minimal
+    case list
 }
 
 // MARK: - Supporting Views
