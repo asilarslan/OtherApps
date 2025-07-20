@@ -98,28 +98,58 @@ public struct AppCardView: View {
     }
     
     private var compactCard: some View {
-        HStack(spacing: 12) {
-            AppIconView(url: app.iconUrl, size: 45)
+        VStack(spacing: 8) {
+            // App icon at the top
+            AppIconView(url: app.iconUrl, size: 50)
             
-            VStack(alignment: .leading, spacing: 2) {
+            // App info
+            VStack(alignment: .center, spacing: 4) {
                 Text(app.name)
                     .font(.subheadline)
-                    .fontWeight(.medium)
+                    .fontWeight(.semibold)
                     .foregroundColor(.primary)
-                    .lineLimit(1)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
                 
                 Text(app.category)
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .lineLimit(1)
+                
+                // Rating and price in a row
+                HStack(spacing: 4) {
+                    StarRatingView(rating: app.averageRating, size: 10)
+                    
+                    if app.price > 0 {
+                        Text(app.formattedPrice)
+                            .font(.caption2)
+                            .fontWeight(.medium)
+                            .foregroundColor(.primary)
+                    }
+                }
             }
             
-            Spacer()
-            
-            StarRatingView(rating: app.averageRating, size: 10)
+            // Get button
+            Button(action: {
+                // Action handled by parent button
+            }) {
+                Text("GET")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 4)
+                    .background(Color.blue)
+                    .clipShape(Capsule())
+            }
+            .disabled(true) // Parent button handles the action
         }
         .padding(12)
+        .frame(maxWidth: .infinity)
+        .frame(height: 160) // Fixed height for consistent grid
         .background(secondarySystemBackgroundColor)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
     
     private var featuredCard: some View {

@@ -201,7 +201,7 @@ public struct OtherAppsView: View {
     }
     
     private var gridLayout: some View {
-        LazyVGrid(columns: gridColumns, spacing: 12) {
+        LazyVGrid(columns: gridColumns, spacing: 16) {
             ForEach(apps) { app in
                 AppCardView(
                     app: app,
@@ -245,7 +245,7 @@ public struct OtherAppsView: View {
             
             // Other apps in compact style
             if apps.count > 1 {
-                LazyVGrid(columns: gridColumns, spacing: 8) {
+                LazyVGrid(columns: gridColumns, spacing: 12) {
                     ForEach(Array(apps.dropFirst())) { app in
                         AppCardView(
                             app: app,
@@ -262,8 +262,8 @@ public struct OtherAppsView: View {
     
     private var gridColumns: [GridItem] {
         [
-            GridItem(.flexible(), spacing: 8),
-            GridItem(.flexible(), spacing: 8)
+            GridItem(.flexible(), spacing: 12),
+            GridItem(.flexible(), spacing: 12)
         ]
     }
     
