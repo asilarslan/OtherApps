@@ -1,0 +1,42 @@
+{
+  "title": "My Other Apps",
+  "subtitle": "Discover my other amazing creations on the App Store!",
+  "apps": [
+    {
+      "url": "https://apps.apple.com/us/app/cartoonify-me/id6747951776",
+      "featured": true,
+      "title": null,
+      "description": null
+    },
+    {
+      "url": "https://apps.apple.com/us/app/instagram/id389801252", 
+      "featured": false,
+      "title": null,
+      "description": null
+    },
+    {
+      "url": "https://apps.apple.com/us/app/whatsapp-messenger/id310633997",
+      "featured": false,
+      "title": null,
+      "description": null
+    },
+    {
+      "url": "https://apps.apple.com/us/app/telegram-messenger/id686449807",
+      "featured": false,
+      "title": null,
+      "description": null
+    },
+    {
+      "url": "https://apps.apple.com/us/app/spotify-music-and-podcasts/id324684580",
+      "featured": false,
+      "title": null,
+      "description": null
+    },
+    {
+      "url": "https://apps.apple.com/us/app/netflix/id363590051",
+      "featured": false,
+      "title": null,
+      "description": null
+    }
+  ]
+} 
