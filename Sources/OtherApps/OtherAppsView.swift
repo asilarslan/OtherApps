@@ -160,6 +160,8 @@ public struct OtherAppsView: View {
                     carouselLayout
                 case .featured:
                     featuredLayout
+                case .minimal:
+                    minimalLayout
                 }
             }
         }
@@ -187,14 +189,20 @@ public struct OtherAppsView: View {
     // MARK: - Layout Styles
     
     private var listLayout: some View {
-        LazyVStack(spacing: 8) {
+        LazyVStack(spacing: 1) {
             ForEach(apps) { app in
                 AppCardView(
                     app: app,
-                    style: .standard,
+                    style: .list,
                     onTap: { handleAppTap(app) }
                 )
                 .padding(.horizontal, 16)
+                
+                // Add separator line between items
+                if app.id != apps.last?.id {
+                    Divider()
+                        .padding(.horizontal, 16)
+                }
             }
         }
         .padding(.bottom, 16)
@@ -260,6 +268,20 @@ public struct OtherAppsView: View {
         .padding(.bottom, 16)
     }
     
+    private var minimalLayout: some View {
+        LazyVStack(spacing: 12) {
+            ForEach(apps) { app in
+                AppCardView(
+                    app: app,
+                    style: .minimal,
+                    onTap: { handleAppTap(app) }
+                )
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.bottom, 16)
+    }
+    
     private var gridColumns: [GridItem] {
         [
             GridItem(.flexible(), spacing: 12),
@@ -309,6 +331,7 @@ public enum OtherAppsLayout {
     case grid       // 2-column grid with compact cards
     case carousel   // Horizontal scrolling carousel
     case featured   // Featured first app + grid of others
+    case minimal    // Minimal card style for a more compact look
 }
 
 // MARK: - Convenience Views

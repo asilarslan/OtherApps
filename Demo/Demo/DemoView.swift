@@ -128,6 +128,7 @@ struct DemoView: View {
                         Text("List").tag(OtherAppsLayout.list)
                         Text("Featured").tag(OtherAppsLayout.featured)
                         Text("Carousel").tag(OtherAppsLayout.carousel)
+                        Text("Minimal").tag(OtherAppsLayout.minimal)
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding(.horizontal)
@@ -307,6 +308,7 @@ struct DemoView: View {
         case .list: return "List Layout Demo"
         case .featured: return "Featured Layout Demo"
         case .carousel: return "Carousel Layout Demo"
+        case .minimal: return "Minimal Layout Demo"
         }
     }
     
@@ -336,6 +338,12 @@ struct DemoView: View {
                     title: "Carousel Layout",
                     message: "Horizontal scrolling showcase. Perfect for highlighting apps in a fun, interactive way.",
                     icon: "arrow.left.and.right"
+                )
+            case .minimal:
+                InfoBoxView(
+                    title: "Minimal Layout",
+                    message: "Ultra-clean, minimal design with just app icons and names. Perfect for settings screens or about pages.",
+                    icon: "doc.text"
                 )
             }
         }
@@ -371,7 +379,7 @@ struct DemoView: View {
                 
                 FeatureCardView(
                     icon: "square.grid.2x2",
-                    title: "4 Layouts",
+                    title: "5 Layouts",
                     description: "Multiple display styles"
                 )
                 
