@@ -13,7 +13,8 @@ A beautiful, professional SwiftUI library for showcasing your other apps from th
 - **Cross-Platform**: iOS, macOS, watchOS, tvOS support
 - **Multiple Data Sources**: JSON URLs, App Store URLs, or configuration objects
 - **Customizable**: Colors, fonts, spacing, and more
-- **Reliable App Store Integration**: Uses itms-apps:// URL scheme for consistent opening
+- **In-App App Store**: SKOverlay integration for seamless app discovery (iOS 14+)
+- **Reliable Fallback**: itms-apps:// URL scheme for older iOS versions
 - **Async Loading**: Built with modern Swift concurrency
 - **Error Handling**: Graceful error states and retry functionality
 - **Accessibility**: Full VoiceOver and Dynamic Type support

@@ -359,6 +359,24 @@ public struct OtherAppsView: View {
     
     private func openAppStoreWithScheme(appId: String) {
         #if canImport(UIKit)
+        // Try SKOverlay first (iOS 14+)
+        if #available(iOS 14.0, *) {
+            print("📱 iOS 14+ detected, attempting SKOverlay")
+            
+            let config = SKOverlay.AppConfiguration(appIdentifier: appId, position: .bottom)
+            let overlay = SKOverlay(configuration: config)
+            
+            // Find the window scene to present the overlay
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                print("✅ Window scene found, presenting SKOverlay for app: \(appId)")
+                overlay.present(in: windowScene)
+                return
+            } else {
+                print("❌ No window scene found, falling back to itms-apps://")
+            }
+        }
+        
+        // Fallback to itms-apps:// URL scheme
         let appStoreUrl = "itms-apps://itunes.apple.com/app/id\(appId)"
         print("🔗 Opening: \(appStoreUrl)")
         
